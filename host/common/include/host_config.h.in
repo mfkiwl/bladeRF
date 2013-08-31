@@ -15,20 +15,6 @@
 
 
 /*******************************************************************************
- * Function visibility
- ******************************************************************************/
-#if BLADERF_OS_WINDOWS
-#   ifdef __GNUC__
-#       define API_EXPORT __attribute__ ((dllexport))
-#   else
-#       define API_EXPORT __declspec(dllexport)
-#   endif
-#else
-#   define API_EXPORT __attribute__ ((visibility ("default")))
-#endif
-
-
-/*******************************************************************************
  * Endianness conversions
  *
  * HOST_TO_LE16         16-bit host endianness to little endian conversion

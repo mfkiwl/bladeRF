@@ -19,7 +19,6 @@
  * Device discovery & initialization/deinitialization
  *----------------------------------------------------------------------------*/
 
-API_EXPORT
 int bladerf_get_device_list(struct bladerf_devinfo **devices)
 {
     int ret;
@@ -40,7 +39,6 @@ int bladerf_get_device_list(struct bladerf_devinfo **devices)
     return ret;
 }
 
-API_EXPORT
 void bladerf_free_device_list(struct bladerf_devinfo *devices)
 {
     /* Admittedly, we could just have the user call free() directly,
@@ -57,7 +55,6 @@ static void init_stats(struct bladerf_stats *stats)
     stats->tx_throughput = 0;
 }
 
-API_EXPORT
 int bladerf_open_with_devinfo(struct bladerf **device,
                                 struct bladerf_devinfo *devinfo)
 {
@@ -90,7 +87,6 @@ int bladerf_open_with_devinfo(struct bladerf **device,
 }
 
 /* dev path becomes device specifier string (osmosdr-like) */
-API_EXPORT
 int bladerf_open(struct bladerf **device, const char *dev_id)
 {
     struct bladerf *dev;
@@ -148,13 +144,11 @@ int bladerf_open(struct bladerf **device, const char *dev_id)
     return status;
 }
 
-API_EXPORT
 void bladerf_close(struct bladerf *dev)
 {
     dev->fn->close(dev);
 }
 
-API_EXPORT
 int bladerf_enable_module(struct bladerf *dev,
                             bladerf_module m, bool enable)
 {
@@ -190,7 +184,6 @@ int bladerf_enable_module(struct bladerf *dev,
     return status;
 }
 
-API_EXPORT
 int bladerf_set_loopback(struct bladerf *dev, bladerf_loopback l)
 {
     lms_loopback_enable( dev, l );
@@ -198,26 +191,22 @@ int bladerf_set_loopback(struct bladerf *dev, bladerf_loopback l)
 }
 
 
-API_EXPORT
 int bladerf_set_rational_sample_rate(struct bladerf *dev, bladerf_module module, unsigned int integer, unsigned int num, unsigned int denom)
 {
     /* TODO: Program the Si5338 to be 2x the desired sample rate */
     return 0;
 }
 
-API_EXPORT
 int bladerf_set_sample_rate(struct bladerf *dev, bladerf_module module, uint32_t rate, uint32_t *actual)
 {
     return si5338_set_sample_rate(dev, module, rate, actual);
 }
 
-API_EXPORT
 int bladerf_get_sample_rate(struct bladerf *dev, bladerf_module module, unsigned int *rate)
 {
     return si5338_get_sample_rate(dev, module, rate);
 }
 
-API_EXPORT
 int bladerf_get_sampling(struct bladerf *dev, bladerf_sampling *sampling)
 {
     int status = 0, external = 0;
@@ -247,7 +236,6 @@ bladerf_get_sampling__done:
     return status;
 }
 
-API_EXPORT
 int bladerf_set_sampling(struct bladerf *dev, bladerf_sampling sampling)
 {
     uint8_t val ;
@@ -313,14 +301,12 @@ bladerf_set_sampling__done:
     return status;
 }
 
-API_EXPORT
 int bladerf_get_rational_sample_rate(struct bladerf *dev, bladerf_module module, unsigned int integer, unsigned int num, unsigned int denom)
 {
     /* TODO: Read the Si5338 and figure out the sample rate */
     return 0;
 }
 
-API_EXPORT
 int bladerf_set_txvga2(struct bladerf *dev, int gain)
 {
     if( gain > 25 ) {
@@ -336,7 +322,6 @@ int bladerf_set_txvga2(struct bladerf *dev, int gain)
     return 0;
 }
 
-API_EXPORT
 int bladerf_get_txvga2(struct bladerf *dev, int *gain)
 {
     uint8_t gain_u8;
@@ -346,7 +331,6 @@ int bladerf_get_txvga2(struct bladerf *dev, int *gain)
     return 0;
 }
 
-API_EXPORT
 int bladerf_set_txvga1(struct bladerf *dev, int gain)
 {
     if( gain < -35 ) {
@@ -362,7 +346,6 @@ int bladerf_set_txvga1(struct bladerf *dev, int gain)
     return 0;
 }
 
-API_EXPORT
 int bladerf_get_txvga1(struct bladerf *dev, int *gain)
 {
     *gain = 0;
@@ -372,7 +355,6 @@ int bladerf_get_txvga1(struct bladerf *dev, int *gain)
     return 0;
 }
 
-API_EXPORT
 int bladerf_set_lna_gain(struct bladerf *dev, bladerf_lna_gain gain)
 {
     /* TODO: Make return values for lms call and return it for failure */
@@ -380,7 +362,6 @@ int bladerf_set_lna_gain(struct bladerf *dev, bladerf_lna_gain gain)
     return 0;
 }
 
-API_EXPORT
 int bladerf_get_lna_gain(struct bladerf *dev, bladerf_lna_gain *gain)
 {
     /* TODO: Make return values for lms call and return it for failure */
@@ -388,7 +369,6 @@ int bladerf_get_lna_gain(struct bladerf *dev, bladerf_lna_gain *gain)
     return 0;
 }
 
-API_EXPORT
 int bladerf_set_rxvga1(struct bladerf *dev, int gain)
 {
     int r;
@@ -398,7 +378,6 @@ int bladerf_set_rxvga1(struct bladerf *dev, int gain)
     return 0;
 }
 
-API_EXPORT
 int bladerf_get_rxvga1(struct bladerf *dev, int *gain)
 {
     uint8_t gain_u8;
@@ -408,7 +387,6 @@ int bladerf_get_rxvga1(struct bladerf *dev, int *gain)
     return 0;
 }
 
-API_EXPORT
 int bladerf_set_rxvga2(struct bladerf *dev, int gain)
 {
     /* TODO: Make return values for lms call and return it for failure */
@@ -417,7 +395,6 @@ int bladerf_set_rxvga2(struct bladerf *dev, int gain)
     return 0;
 }
 
-API_EXPORT
 int bladerf_get_rxvga2(struct bladerf *dev, int *gain)
 {
     uint8_t gain_u8;
@@ -428,7 +405,6 @@ int bladerf_get_rxvga2(struct bladerf *dev, int *gain)
     return 0;
 }
 
-API_EXPORT
 int bladerf_set_bandwidth(struct bladerf *dev, bladerf_module module,
                             unsigned int bandwidth,
                             unsigned int *actual)
@@ -440,7 +416,6 @@ int bladerf_set_bandwidth(struct bladerf *dev, bladerf_module module,
     return 0;
 }
 
-API_EXPORT
 int bladerf_get_bandwidth(struct bladerf *dev, bladerf_module module,
                             unsigned int *bandwidth )
 {
@@ -450,7 +425,6 @@ int bladerf_get_bandwidth(struct bladerf *dev, bladerf_module module,
     return 0;
 }
 
-API_EXPORT
 int bladerf_select_band(struct bladerf *dev, bladerf_module module,
                         unsigned int frequency)
 {
@@ -470,7 +444,6 @@ int bladerf_select_band(struct bladerf *dev, bladerf_module module,
     return 0;
 }
 
-API_EXPORT
 int bladerf_set_frequency(struct bladerf *dev,
                             bladerf_module module, unsigned int frequency)
 {
@@ -480,7 +453,6 @@ int bladerf_set_frequency(struct bladerf *dev,
     return 0;
 }
 
-API_EXPORT
 int bladerf_get_frequency(struct bladerf *dev,
                             bladerf_module module, unsigned int *frequency)
 {
@@ -497,7 +469,6 @@ int bladerf_get_frequency(struct bladerf *dev,
     return rv;
 }
 
-API_EXPORT
 int bladerf_tx(struct bladerf *dev, bladerf_format format, void *samples,
                int num_samples, struct bladerf_metadata *metadata)
 {
@@ -509,7 +480,6 @@ int bladerf_tx(struct bladerf *dev, bladerf_format format, void *samples,
     return dev->fn->tx(dev, format, samples, num_samples, metadata);
 }
 
-API_EXPORT
 int bladerf_rx(struct bladerf *dev, bladerf_format format, void *samples,
                    int num_samples, struct bladerf_metadata *metadata)
 {
@@ -521,7 +491,6 @@ int bladerf_rx(struct bladerf *dev, bladerf_format format, void *samples,
     return dev->fn->rx(dev, format, samples, num_samples, metadata);
 }
 
-API_EXPORT
 int bladerf_init_stream(struct bladerf_stream **stream,
                         struct bladerf *dev,
                         bladerf_stream_cb callback,
@@ -611,7 +580,6 @@ int bladerf_init_stream(struct bladerf_stream **stream,
     return status;
 }
 
-API_EXPORT
 void bladerf_deinit_stream(struct bladerf_stream *stream)
 {
 
@@ -640,7 +608,6 @@ void bladerf_deinit_stream(struct bladerf_stream *stream)
     return ;
 }
 
-API_EXPORT
 int bladerf_stream(struct bladerf *dev, bladerf_module module,
                    bladerf_format format, struct bladerf_stream *stream)
 {
@@ -656,48 +623,41 @@ int bladerf_stream(struct bladerf *dev, bladerf_module module,
  * Device Info
  *----------------------------------------------------------------------------*/
 
-API_EXPORT
 int bladerf_get_serial(struct bladerf *dev, char *serial)
 {
     strcpy(serial, dev->serial);
     return 0;
 }
 
-API_EXPORT
 int bladerf_get_vctcxo_trim(struct bladerf *dev, uint16_t *trim)
 {
     *trim = dev->dac_trim;
     return 0;
 }
 
-API_EXPORT
 int bladerf_get_fpga_size(struct bladerf *dev, bladerf_fpga_size *size)
 {
     *size = dev->fpga_size;
     return 0;
 }
 
-API_EXPORT
 int bladerf_get_fw_version(struct bladerf *dev,
                             unsigned int *major, unsigned int *minor)
 {
     return dev->fn->get_fw_version(dev, major, minor);
 }
 
-API_EXPORT
 int bladerf_is_fpga_configured(struct bladerf *dev)
 {
     return dev->fn->is_fpga_configured(dev);
 }
 
-API_EXPORT
 int bladerf_get_fpga_version(struct bladerf *dev,
                                 unsigned int *major, unsigned int *minor)
 {
     return dev->fn->get_fpga_version(dev, major, minor);
 }
 
-API_EXPORT
 int bladerf_stats(struct bladerf *dev, struct bladerf_stats *stats)
 {
     return dev->fn->stats(dev, stats);
@@ -706,7 +666,6 @@ int bladerf_stats(struct bladerf *dev, struct bladerf_stats *stats)
 /*------------------------------------------------------------------------------
  * Device Programming
  *----------------------------------------------------------------------------*/
-API_EXPORT
 int bladerf_flash_firmware(struct bladerf *dev, const char *firmware_file)
 {
     int status;
@@ -758,13 +717,11 @@ int bladerf_flash_firmware(struct bladerf *dev, const char *firmware_file)
     return status;
 }
 
-API_EXPORT
 int bladerf_device_reset(struct bladerf *dev)
 {
     return dev->fn->device_reset(dev);
 }
 
-API_EXPORT
 int bladerf_load_fpga(struct bladerf *dev, const char *fpga_file)
 {
     uint8_t *buf;
@@ -803,7 +760,6 @@ int bladerf_load_fpga(struct bladerf *dev, const char *fpga_file)
  * Misc.
  *----------------------------------------------------------------------------*/
 
-API_EXPORT
 const char * bladerf_strerror(int error)
 {
     switch (error) {
@@ -830,7 +786,6 @@ const char * bladerf_strerror(int error)
     }
 }
 
-API_EXPORT
 const char * bladerf_version(unsigned int *major,
                              unsigned int *minor,
                              unsigned int *patch)
@@ -854,13 +809,11 @@ const char * bladerf_version(unsigned int *major,
  * Si5338 register read / write functions
  *----------------------------------------------------------------------------*/
 
-API_EXPORT
 int bladerf_si5338_read(struct bladerf *dev, uint8_t address, uint8_t *val)
 {
     return dev->fn->si5338_read(dev,address,val);
 }
 
-API_EXPORT
 int bladerf_si5338_write(struct bladerf *dev, uint8_t address, uint8_t val)
 {
     return dev->fn->si5338_write(dev,address,val);
@@ -870,13 +823,11 @@ int bladerf_si5338_write(struct bladerf *dev, uint8_t address, uint8_t val)
  * LMS register read / write functions
  *----------------------------------------------------------------------------*/
 
-API_EXPORT
 int bladerf_lms_read(struct bladerf *dev, uint8_t address, uint8_t *val)
 {
     return dev->fn->lms_read(dev,address,val);
 }
 
-API_EXPORT
 int bladerf_lms_write(struct bladerf *dev, uint8_t address, uint8_t val)
 {
     return dev->fn->lms_write(dev,address,val);
@@ -886,13 +837,11 @@ int bladerf_lms_write(struct bladerf *dev, uint8_t address, uint8_t val)
  * GPIO register read / write functions
  *----------------------------------------------------------------------------*/
 
-API_EXPORT
 int bladerf_config_gpio_read(struct bladerf *dev, uint32_t *val)
 {
     return dev->fn->config_gpio_read(dev,val);
 }
 
-API_EXPORT
 int bladerf_config_gpio_write(struct bladerf *dev, uint32_t val)
 {
     /* If we're connected at HS, we need to use smaller DMA transfers */
@@ -910,7 +859,6 @@ int bladerf_config_gpio_write(struct bladerf *dev, uint32_t val)
  * VCTCXO DAC register write
  *----------------------------------------------------------------------------*/
 
-API_EXPORT
 int bladerf_dac_write(struct bladerf *dev, uint16_t val)
 {
     return dev->fn->dac_write(dev,val);
