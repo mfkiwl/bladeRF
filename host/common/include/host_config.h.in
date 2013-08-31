@@ -14,6 +14,18 @@
 #endif
 
 
+/*******************************************************************************
+ * Function visibility
+ ******************************************************************************/
+#if BLADERF_OS_WINDOWS
+#   ifdef __GNUC__
+#       define API_EXPORT __attribute__ ((dllexport))
+#   else
+#       define API_EXPORT __declspec(dllexport)
+#   endif
+#else
+#   define API_EXPORT __attribute__ ((visibility ("default")))
+#endif
 
 
 /*******************************************************************************
@@ -96,7 +108,7 @@
 //#define snprintf      _snprintf
 //#define vsnprintf     _vsnprintf
 #define strcasecmp      _stricmp
-#define strncasecmp     _strnicmp   
+#define strncasecmp     _strnicmp
 #define usleep          Sleep
 
 /* ssize_t lives elsewhere */
