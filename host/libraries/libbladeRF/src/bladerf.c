@@ -576,8 +576,8 @@ void bladerf_deinit_stream(struct bladerf_stream *stream)
     size_t i;
 
     while( stream->state != STREAM_DONE ) {
-    dbg_printf( "Stream not done...\n" );
-        sleep(1);
+        dbg_printf( "Stream not done...\n" );
+        usleep(1000000);
     }
 
     /* Free up the backend data */
